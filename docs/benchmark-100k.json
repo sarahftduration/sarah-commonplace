@@ -1,0 +1,47 @@
+{
+  "database_bytes": 230723584,
+  "host": "Linux-7.0.0-34-generic-x86_64-with-glibc2.43",
+  "limits": "Loopback only; synthetic text and no remote network latency",
+  "python": "3.14.7",
+  "records": {
+    "claims": 60000,
+    "evidence": 30000,
+    "requests": 10000
+  },
+  "search": {
+    "claim-index-50000": {
+      "elapsed_ms": 24.522,
+      "returned": 1
+    },
+    "needlemarker": {
+      "elapsed_ms": 33.638,
+      "returned": 50
+    },
+    "trace observation 42": {
+      "elapsed_ms": 143.239,
+      "returned": 1
+    }
+  },
+  "sqlite": "3.53.1",
+  "workers": 4,
+  "write": {
+    "claims": {
+      "elapsed_s": 106.728,
+      "p50_ms": 3.692,
+      "p95_ms": 21.116,
+      "p99_ms": 81.67
+    },
+    "evidence": {
+      "elapsed_s": 56.881,
+      "p50_ms": 3.904,
+      "p95_ms": 21.208,
+      "p99_ms": 82.367
+    },
+    "requests": {
+      "elapsed_s": 19.097,
+      "p50_ms": 3.871,
+      "p95_ms": 20.985,
+      "p99_ms": 81.567
+    }
+  }
+}
