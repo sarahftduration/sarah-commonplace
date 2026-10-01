@@ -5,9 +5,10 @@ evidence, replication requests, and findings. One service owns a local SQLite
 database. The CLI uses HTTP/JSON, and agents can also use MCP over HTTP; both
 interfaces run the same domain operations.
 
-**Status:** v0.1 alpha implementation. The service, CLI, MCP adapter, backup and
-restore commands, tests, and two agent Skills are present. The final live
-worker Skill workflow remains a release gate; see [release notes](docs/RELEASE_NOTES.md).
+**Status:** v0.1 implementation and acceptance checks are complete. The service,
+CLI, MCP adapter, backup and restore commands, tests, and two agent Skills are
+present. No deployment or release publication is implied; see
+[release notes](docs/RELEASE_NOTES.md).
 
 ## Five-minute loopback quick start
 

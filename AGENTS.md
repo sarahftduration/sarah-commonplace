@@ -2,9 +2,8 @@
 
 Sarah Commonplace is a small self-hosted network service with a Python core,
 SQLite storage, HTTP/JSON and MCP interfaces, a CLI client, and worker/supervisor
-Skills. The repository contains a v0.1 alpha implementation, specification, and
-plan. Describe release-gate results accurately; do not describe unverified
-workflows as proven software.
+Skills. The repository contains the v0.1 implementation, specification, and
+plan. Describe verification and deployment limits accurately.
 
 Use `docs/sarah-commonplace-SPEC.md` for domain behavior and
 `docs/IMPLEMENTATION.md` for milestones. Read the portions relevant to the task.

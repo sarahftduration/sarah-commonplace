@@ -1,8 +1,8 @@
 # v0.1 implementation plan
 
-The v0.1 alpha implementation is present. See [release notes](RELEASE_NOTES.md)
-for completed checks and the remaining live Skill workflow gate. This document
-continues to define the milestone and release criteria.
+The v0.1 implementation and acceptance checks are complete. See
+[release notes](RELEASE_NOTES.md) for evidence and measurement limits. This
+document continues to define the milestone and release criteria.
 
 Status: ready to begin implementation after the 2026-10-01 network-service revision.
 No application code or usable runtime Skills exist yet. This is a staged build
