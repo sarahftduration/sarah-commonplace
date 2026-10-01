@@ -1,0 +1,16 @@
+[Unit]
+Description=Sarah Commonplace research notebook
+After=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/lib/sarah-commonplace/venv/bin/commonplace serve --db %h/.local/share/sarah-commonplace/notebook.db --token-file %h/.config/sarah-commonplace/token --backup-dir %h/.local/share/sarah-commonplace/backups --host 127.0.0.1 --port 8765
+WorkingDirectory=%h
+UMask=0077
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=45s
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

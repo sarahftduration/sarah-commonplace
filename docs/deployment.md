@@ -32,6 +32,48 @@ incompatible, or owned by another process, as appropriate. The service binds
 http://127.0.0.1:8765/readyz` checks readiness without revealing notebook data.
 `/healthz` reports only liveness. All domain routes require the token.
 
+### Persistent local service at boot
+
+For a notebook shared by projects on one Linux host, install a package wheel in
+a standalone environment at `~/.local/lib/sarah-commonplace/venv`. The sample
+[systemd user unit](../deploy/systemd/sarah-commonplace.service) runs that
+environment independently of the repository checkout. It uses these paths:
+
+| Purpose | Path |
+| --- | --- |
+| SQLite notebook | `~/.local/share/sarah-commonplace/notebook.db` |
+| Service-managed backups | `~/.local/share/sarah-commonplace/backups/` |
+| Bearer token | `~/.config/sarah-commonplace/token` |
+| Unit | `~/.config/systemd/user/sarah-commonplace.service` |
+
+Create the data, backup, and configuration directories with owner-only access.
+Generate a high-entropy token in the token file with mode `0600`; initialize
+the database once with `commonplace db init --db
+"$HOME/.local/share/sarah-commonplace/notebook.db"` while the service is
+stopped. Copy the sample unit to the unit path, then enable it:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now sarah-commonplace.service
+sudo loginctl enable-linger "$USER"
+```
+
+Linger starts the user's systemd manager during boot, before login, and keeps
+it running after logout. On hosts that require administrator authorization for
+`loginctl enable-linger`, ask the host administrator to run that one command.
+Check `systemctl --user is-active sarah-commonplace.service`,
+`loginctl show-user "$USER" -p Linger`, and the `/readyz` URL. Operational
+logs are available with `journalctl --user -u sarah-commonplace.service`.
+Stop the unit before offline database maintenance. Do not run a second server
+against the same notebook.
+
+Other local projects use `COMMONPLACE_URL=http://127.0.0.1:8765` and
+`COMMONPLACE_TOKEN_FILE=$HOME/.config/sarah-commonplace/token`; they do not
+open SQLite. Each project still selects its own project and each worker starts
+its own research session as described below. The backup directory holds only
+backups explicitly requested through the service; configure a separate
+schedule if automatic backups are wanted.
+
 Keep the token out of command arguments, URLs, logs, research records, and
 repository files. The service reads the credential from a regular file with
 owner-only permissions. Replacing/revoking the token is an operator action:
