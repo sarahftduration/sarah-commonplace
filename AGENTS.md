@@ -1,14 +1,19 @@
 # Project instructions
 
-Sarah Commonplace is a local research notebook with a Python core, SQLite storage,
-CLI, MCP adapter, and worker/supervisor Skills. The repository currently contains
-the implementation specification and plan; do not describe planned features as
-working software.
+Sarah Commonplace is a small self-hosted network service with a Python core,
+SQLite storage, HTTP/JSON and MCP interfaces, a CLI client, and worker/supervisor
+Skills. The repository currently contains the implementation specification and
+plan; do not describe planned features as working software.
 
 Use `docs/sarah-commonplace-SPEC.md` for domain behavior and
 `docs/IMPLEMENTATION.md` for milestones. Read the portions relevant to the task.
 Keep the specification, public contracts, examples, and Skills consistent when
 changing behavior.
+
+One service process owns the local SQLite database. CLI and MCP requests pass
+through that service's shared domain logic; normal clients never open SQLite.
+Only offline host maintenance commands may access storage outside the daemon,
+under the same exclusive instance lock. The service owns sessions and lease time.
 
 ## Models and delegation
 
@@ -18,9 +23,10 @@ do not silently substitute another model. If the current task uses another lead
 model, say so rather than claiming a model change. Follow later explicit model
 instructions from Sarah.
 
-The lead owns domain decisions, shared schema/contracts, lease/concurrency logic,
-integration, and release verification. Delegate independent, clearly bounded
-implementation, tests, documentation, or review tasks to Luna after their inputs
+The lead owns domain decisions, service/API boundaries, shared schema/contracts,
+lease/concurrency logic, integration, and release verification. Delegate
+independent, clearly bounded implementation, tests, documentation, or review tasks
+to Luna after their inputs
 and interfaces exist. Assign file ownership and concrete acceptance checks. Do
 not let multiple agents edit the same files concurrently or commit over each
 other's work. The lead reviews and integrates their results.
@@ -50,9 +56,10 @@ branch, push outcome, and checks performed.
 ## Verification
 
 Test observable behavior and data integrity, especially lease races, expiry,
-multi-project links, provenance, activity pagination, and crash recovery. Keep
-transactions short and adapters thin. Run focused checks while developing and
-the complete required release checks before declaring v0.1 complete.
+multi-project links, provenance, activity pagination, lost network responses,
+and service crash recovery. Keep transactions short and adapters thin. Run focused
+checks while developing and the complete required release checks before declaring
+v0.1 complete.
 
 Documentation-only changes require link/contract consistency and diff checks;
 do not invent passing application tests before the implementation exists.
